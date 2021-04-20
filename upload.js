@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import * as fs from "fs";
-import { createIssue, parse } from "./lib.js";
+import { createIssue, parse, sleep } from "./lib.js";
 
 const [, , issuesFile, repoUrl] = process.argv;
 
@@ -14,6 +14,10 @@ const issues = JSON.parse(fs.readFileSync(issuesFile));
 const { owner, repo } = parse(repoUrl);
 
 for (const issue of issues) {
+  if ("pull_request" in issue) {
+    continue;
+  }
   console.log(issue.number);
   createIssue(owner, repo, issue.title, issue.body);
+  await sleep(5000);
 }

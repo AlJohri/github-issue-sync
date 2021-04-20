@@ -2,6 +2,12 @@ import fetch from "node-fetch";
 
 const urlRegex = /^https:\/\/github.com\/([\w-]+)\/([\w-]+)(?:\/(tree|blob)\/([\w-]+)\/(.*))?$/;
 
+export function sleep(ms) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, ms);
+  });
+}
+
 /*
  * Parse github url into individual components.
  */
